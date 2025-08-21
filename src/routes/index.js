@@ -64,6 +64,8 @@ router.post("/", (req, res, next) => {
     });
   }
 });
+
+//put
 router.put("/:id", (req, res, next) => {
   const id = parseInt(req.params.id);
   const { nome, idade } = req.body;
@@ -92,7 +94,37 @@ router.put("/:id", (req, res, next) => {
   res.status(200).json({
     success: true,
     message: "Usuário atualizado com sucesso!"
-  })
-
+  });
 });
+
+//delete
+router.delete("/:id", (req, res, next) => {
+
+  try{
+
+    const id = parseInt(req.params.id);
+    const userFind = users.findIndex(u => u.id === id)
+    console.log(`index encontrado ${userFind}`);
+
+    if(userFind === -1){
+      return res.status(404).json({
+        success: false,
+        message: "Identificador não encontrado"
+      });
+    }
+
+    users.splice(userFind, 1);
+
+    res.status(200).json({
+      success: true,
+      message: "Usuário removido"
+    });
+  }catch(erro){
+    res.status(500).json({
+        success: false,
+        message: "Erro interno ao deletar o usuário"
+    });
+  }
+});
+
 module.exports = router;
