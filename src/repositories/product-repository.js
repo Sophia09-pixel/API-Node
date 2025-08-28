@@ -9,7 +9,7 @@ class ProductRepository {
 
   //Busca por id
   async findById(id) {
-    return await Product.findById({ id });
+    return await Product.findById(id);
   }
 
   //Criar
